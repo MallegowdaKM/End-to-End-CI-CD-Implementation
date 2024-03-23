@@ -3,9 +3,6 @@ agent any
 tools{
 maven "maven_3.9.6"
 }
-parameters {
-choice choices: ['master', 'main'], description: 'Select the branch name', name: 'BranchName'
-}
 options {
 buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '1', numToKeepStr: '5')
 timestamps()
@@ -14,7 +11,7 @@ stages{
 stage("checkout"){
 steps{
 slack("STARTED")
-git branch: "${params.BranchName}", credentialsId: 'cbc6f3fd-5b34-4d4f-9006-d9297195ee64', url: 'https://github.com/MallegowdaKM/jenkins.git'
+git branch: 'main', credentialsId: 'cbc6f3fd-5b34-4d4f-9006-d9297195ee64', url: 'https://github.com/MallegowdaKM/jenkins.git'
 }
 }
 stage("build"){
