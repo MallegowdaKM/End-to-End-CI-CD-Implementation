@@ -97,15 +97,15 @@
 	
           <repository>
 	    <id>nexus</id>
-            <name>Mithun Technologies Releases Nexus Repository</name>
-	    <url>http://172.31.1.117:8081/repository/maven-release/</url>
-          </repository>
+              <name>walmart-release</name>
+	      <url>http://18.141.212.19:8081/repository/walmart-release/</url>
+            </repository>
 	    
 	  <snapshotRepository>
 	    <id>nexus</id>
-	    <name>Mithun Technologies Snapshot Nexus Repository </name>
-	    <url>http://172.31.1.117:8081/repository/maven-snapshot/</url>
-	  </snapshotRepository>
+	      <name>walmart-snapshot</name>
+	      <url>http://18.141.212.19:8081/repository/walmart-snapshot/</url>
+	    </snapshotRepository>
 	    
 	</distributionManagement>
 	
