@@ -20,7 +20,6 @@ git branch: "${params.BranchName}", credentialsId: 'cbc6f3fd-5b34-4d4f-9006-d929
 }
 stage("build"){
 steps{
-cleanWs()
 sh "mvn clean package"
 }
 }
