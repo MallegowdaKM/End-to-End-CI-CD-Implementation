@@ -20,21 +20,25 @@ git branch: "${params.BranchName}", credentialsId: 'cbc6f3fd-5b34-4d4f-9006-d929
 }
 stage("build"){
 steps{
+cleanWs()
 sh "mvn clean package"
 }
 }
 stage("executesonarqube"){
 steps{
+cleanWs()
 sh "mvn clean sonar:sonar"
 }
 }
 stage("uploadartifactintonexus"){
 steps{
+cleanWs()
 sh "mvn clean deploy"
 }
 }
 stage("deploymentappintitomcat"){
 steps{
+cleanWs()
 sshagent(['2e13cc75-48ba-4809-9b57-b8e6185ea387']){
 sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@172.31.41.176:/opt/tomcat9/webapps/"
 }
