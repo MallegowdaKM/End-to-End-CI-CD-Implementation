@@ -30,6 +30,11 @@ steps{
 sh "docker build -t mallegowda/maven:${BUILD_NUMBER} ."
 }
 }
+stage("executesonarqube"){
+steps{
+sh "mvn clean sonar:sonar"
+}
+}
 stage("login for dockerhub"){
 steps{
 withCredentials([string(credentialsId: '426a9565-fdd5-4143-ae4c-87b417b22970', variable: 'dockerhub')]) {
@@ -42,11 +47,6 @@ stage("run the dockerimage"){
 steps{
 sh "docker run -d --name maven${BUILD_NUMBER} -p 80${BUILD_NUMBER}:8080 mallegowda/maven:${BUILD_NUMBER}"
 }    
-}
-stage("executesonarqube"){
-steps{
-sh "mvn clean sonar:sonar"
-}
 }
 }//stages
 post {
