@@ -33,7 +33,7 @@ sh "docker build -t mallegowda/maven:${BUILD_NUMBER} ."
 stage("login for dockerhub"){
 steps{
 withCredentials([string(credentialsId: 'ce9b54f8-166c-4c18-acca-60941ed4a1ea', variable: 'docker_hub_credentials')]) {
-sh "docker login -u mallegowda -p ${docker_hub_credentials}"
+sh "docker login -u mallegowda --password-stdin ${docker_hub_credentials}"
 }
 sh "docker push mallegowda/maven:${BUILD_NUMBER}"
 }
