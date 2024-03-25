@@ -1,6 +1,6 @@
 pipeline{
 agent{
-label 'docker'    
+label 'docker_slave'    
 }
 tools{
 maven "maven_3.9.6"
