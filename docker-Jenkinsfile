@@ -17,7 +17,7 @@ stage("checkout"){
 steps{
 slack("STARTED")
 cleanWs()
-git branch: "${params.BranchName}", credentialsId: 'cbc6f3fd-5b34-4d4f-9006-d9297195ee64', url: 'https://github.com/MallegowdaKM/docker.git'
+git branch: "${params.BranchName}", credentialsId: 'cbc6f3fd-5b34-4d4f-9006-d9297195ee64', url: 'https://github.com/MallegowdaKM/End-to-End-CI-CD-Implementation.git'
 }
 }
 stage("build"){
