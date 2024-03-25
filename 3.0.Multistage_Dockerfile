@@ -1,10 +1,8 @@
-FROM maven:3.5-jdk-9-slim
+FROM maven:3.5-jdk-11-slim
 COPY . .
-RUN mvn clean install 
+RUN mvn clean install sonar:sonar \
+    -Dsonar.host.url=http://172.31.41.155:9000 \
+    -Dsonar.login=squ_5a278a9b4da8bd44cf294f3658358ce77e3f5c27
 
 FROM tomcat:jre8-alpine
 COPY --from=0 /target/maven-web-application*.war /usr/local/tomcat/webapps/maven-web-application.war
-
-FROM sonarqube:latest
-COPY . .
-RUN mvn clean sonar:sonar
