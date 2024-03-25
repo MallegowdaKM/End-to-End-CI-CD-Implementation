@@ -20,19 +20,9 @@ cleanWs()
 git branch: "${params.BranchName}", credentialsId: 'cbc6f3fd-5b34-4d4f-9006-d9297195ee64', url: 'https://github.com/MallegowdaKM/End-to-End-CI-CD-Implementation.git'
 }
 }
-stage("build"){
-steps{
-sh "mvn clean package"
-}
-}
 stage("Build Docker Image"){
 steps{
 sh "docker build -f Multistage_Dockerfile -t mallegowda/maven:${BUILD_NUMBER} ."
-}
-}
-stage("executesonarqube"){
-steps{
-sh "mvn clean sonar:sonar"
 }
 }
 stage("login for dockerhub"){
