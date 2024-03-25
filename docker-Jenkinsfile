@@ -43,6 +43,11 @@ steps{
 sh "docker run -d --name maven${BUILD_NUMBER} -p 80${BUILD_NUMBER}:8080 mallegowda/maven:${BUILD_NUMBER}"
 }    
 }
+stage("executesonarqube"){
+steps{
+sh "mvn clean sonar:sonar"
+}
+}
 }//stages
 post {
   aborted {
