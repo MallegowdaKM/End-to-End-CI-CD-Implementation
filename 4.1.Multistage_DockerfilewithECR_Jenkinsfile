@@ -33,7 +33,7 @@ sh "docker tag jenkins:${BUILD_NUMBER} 543326564092.dkr.ecr.ap-southeast-1.amazo
 }
 stage("login for dockerhub"){
 steps{
-sh "docker push 543326564092.dkr.ecr.ap-southeast-1.amazonaws.com/jenkins:{BUILD_NUMBER}"
+sh "docker push 543326564092.dkr.ecr.ap-southeast-1.amazonaws.com/jenkins:${BUILD_NUMBER}"
 }
 }
 stage("run the dockerimage"){
