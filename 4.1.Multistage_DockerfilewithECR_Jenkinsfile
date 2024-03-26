@@ -27,7 +27,7 @@ sh "aws ecr get-login-password --region ap-southeast-1 | docker login --username
 }
 stage("Build Docker Image"){
 steps{
-sh "docker build -f 4.0.Multistage_Dockerfile with ECR -t jenkins:${BUILD_NUMBER} ."
+sh "docker build -f 4.0.Multistage_DockerfilewithECR -t jenkins:${BUILD_NUMBER} ."
 sh "docker tag jenkins:${BUILD_NUMBER} 543326564092.dkr.ecr.ap-southeast-1.amazonaws.com/jenkins:${BUILD_NUMBER}"
 }
 }
