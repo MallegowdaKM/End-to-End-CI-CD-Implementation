@@ -27,7 +27,7 @@ sh "docker build -f 4.0.Multistage_Dockerfile with ECR -t mallegowda/maven:${BUI
 }
 stage("login for dockerhub"){
 steps{
-aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 543326564092.dkr.ecr.ap-southeast-1.amazonaws.com/jenkins
+aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin jenkins
 }
 sh "docker push mallegowda/maven:${BUILD_NUMBER}"
 }
