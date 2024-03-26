@@ -22,7 +22,7 @@ git branch: "${params.BranchName}", credentialsId: 'cbc6f3fd-5b34-4d4f-9006-d929
 }
 stage("login for AWSECR"){
 steps{
-aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin
+aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 543326564092.dkr.ecr.ap-southeast-1.amazonaws.com
 }
 }
 stage("Build Docker Image"){
