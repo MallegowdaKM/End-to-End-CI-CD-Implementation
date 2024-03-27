@@ -4,7 +4,7 @@ tools{
 maven "maven_3.9.6"
 }
 parameters {
-choice choices: ['master', 'main'], description: 'Select the branch name', name: 'BranchName'
+choice choices: ['main', 'master'], description: 'Select the branch name', name: 'BranchName'
 }
 options {
 buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '1', numToKeepStr: '5')
