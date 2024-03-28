@@ -37,7 +37,7 @@ sh "docker push 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMB
 }
 stage("run the dockerimage"){
 steps{
-sh "docker run -d --name maven:${BUILD_NUMBER} -p 80${BUILD_NUMBER}:8080 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER}"
+sh "docker run -d --name maven${BUILD_NUMBER} -p 80${BUILD_NUMBER}:8080 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER}"
 }    
 }
 }//stages
