@@ -1,6 +1,6 @@
 pipeline{
 agent{
-label 'docker_slave'    
+label 'docker_jenkins'    
 }
 tools{
 maven "maven_3.9.6"
@@ -22,23 +22,22 @@ git branch: "${params.BranchName}", credentialsId: 'cbc6f3fd-5b34-4d4f-9006-d929
 }
 stage("login for AWSECR"){
 steps{
-sh "aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 543326564092.dkr.ecr.ap-southeast-1.amazonaws.com"
+sh "aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 381492155622.dkr.ecr.ap-south-1.amazonaws.com"
 }
 }
 stage("Build Docker Image"){
 steps{
-sh "docker build -f 4.0.Multistage_DockerfilewithECR -t jenkins:${BUILD_NUMBER} ."
-sh "docker tag jenkins:${BUILD_NUMBER} 543326564092.dkr.ecr.ap-southeast-1.amazonaws.com/jenkins:${BUILD_NUMBER}"
+sh "docker build -f 4.0.Multistage_DockerfilewithECR -t 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER} ."
 }
 }
 stage("login for dockerhub"){
 steps{
-sh "docker push 543326564092.dkr.ecr.ap-southeast-1.amazonaws.com/jenkins:${BUILD_NUMBER}"
+sh "docker push 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER}"
 }
 }
 stage("run the dockerimage"){
 steps{
-sh "docker run -d --name 543326564092.dkr.ecr.ap-southeast-1.amazonaws.com/jenkins${BUILD_NUMBER} -p 80${BUILD_NUMBER}:8080 543326564092.dkr.ecr.ap-southeast-1.amazonaws.com/jenkins:${BUILD_NUMBER}"
+sh "docker run -d --name maven:${BUILD_NUMBER} -p 80${BUILD_NUMBER}:8080 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER}"
 }    
 }
 }//stages
