@@ -2,9 +2,6 @@ pipeline{
 agent{
 label 'docker_jenkins'    
 }
-tools{
-maven "maven_3.9.6"
-}
 parameters {
 choice choices: ['main', 'master'], description: 'Select the branch name', name: 'BranchName'
 }
@@ -30,12 +27,12 @@ steps{
 sh "docker build -f 4.0.Multistage_DockerfilewithECR -t 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER} ."
 }
 }
-stage("login for dockerhub"){
+stage("push the for AWS ECR"){
 steps{
 sh "docker push 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER}"
 }
 }
-stage("run the dockerimage"){
+stage("run the dockerimage from AWS ECR"){
 steps{
 sh "docker run -d --name maven${BUILD_NUMBER} -p 80${BUILD_NUMBER}:8080 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER}"
 }    
