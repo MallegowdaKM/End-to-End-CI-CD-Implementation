@@ -29,7 +29,7 @@ spec:
         effect: NoSchedule
       containers:
       - name: mavendeployment
-        image: 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:5
+        image: 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER}
         ports:
         - containerPort: 8080
 ---
