@@ -1,0 +1,22 @@
+pipeline{
+agent{
+label 'kubernetes_slave'
+}
+options {
+buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '1', numToKeepStr: '5')
+timestamps()
+}
+stages{
+stage("checkout"){
+steps{
+cleanWs()
+git branch: 'main', credentialsId: 'a622e8cd-a865-4e6a-9f13-469fed8d1630', url: 'https://github.com/MallegowdaKM/End-to-End-CI-CD-Implementation.git'
+}
+}
+stage("run the dockerimage from AWS ECR"){
+steps{
+sh "kubectl apply -f 5.0.Kubernetes_Dockerfile"
+}
+}
+}//stages
+}//pipeline
