@@ -1,6 +1,6 @@
 pipeline{
 agent{
-label 'kubernetes_slave, docker_jenkins'
+label 'kubernetes_slave'
 }
 options {
 buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '1', numToKeepStr: '5')
