@@ -28,5 +28,10 @@ steps{
 sh "docker push 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER}"
 }
 }
+stage("deploying application kubernetes"){
+steps{
+sh "kubectl apply -f 5.4.Kubernetes_Dockerfile"
+}
+}
 }//stages
 }//pipeline
