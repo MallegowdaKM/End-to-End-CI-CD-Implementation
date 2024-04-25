@@ -18,5 +18,15 @@ steps{
 sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 381492155622.dkr.ecr.ap-south-1.amazonaws.com"
 }
 }
+stage("Build Docker Image"){
+steps{
+sh "docker build -f 5.0.Multistage_Dockerfile_k8's -t 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER} ."
+}
+}
+stage("push the image for AWS ECR"){
+steps{
+sh "docker push 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER}"
+}
+}
 }//stages
 }//pipeline
