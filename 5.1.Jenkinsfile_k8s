@@ -10,7 +10,7 @@ stages{
 stage("checkout"){
 steps{
 cleanWs()
-git branch: "${params.BranchName}", credentialsId: 'cbc6f3fd-5b34-4d4f-9006-d9297195ee64', url: 'https://github.com/MallegowdaKM/End-to-End-CI-CD-Implementation.git'
+git branch: 'main', credentialsId: 'cbc6f3fd-5b34-4d4f-9006-d9297195ee64', url: 'https://github.com/MallegowdaKM/End-to-End-CI-CD-Implementation.git'
 }
 }
 stage("login for AWSECR"){
