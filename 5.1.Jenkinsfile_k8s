@@ -33,5 +33,10 @@ steps{
 sh "kubectl apply -f 5.4.Kubernetes_Dockerfile"
 }
 }
+stage("set the image"){
+steps{
+sh "kubectl set image deployment/mavendeployment mavendeployment=381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER} -n maven"
+}
+}
 }//stages
 }//pipeline
