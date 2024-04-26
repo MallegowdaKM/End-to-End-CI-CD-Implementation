@@ -2,7 +2,7 @@ FROM maven:3.5-jdk-11-slim
 COPY . .
 RUN mvn clean install sonar:sonar \
     -Dsonar.host.url=http://172.31.34.22:9000 \
-    -Dsonar.login=squ_337b8f4c95b85836f89cf6e2b7865f8a732d0b79
+    -Dsonar.login=squ_9acd61c92fbce65801f5a58fe805d85d66f7c273
 
 FROM tomcat:jre8-alpine
 COPY --from=0 /target/maven-web-application*.war /usr/local/tomcat/webapps/maven-web-application.war
