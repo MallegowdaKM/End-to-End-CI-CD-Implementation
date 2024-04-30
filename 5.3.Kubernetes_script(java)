@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: maven
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mavendeployment
+  namespace: maven
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 2
+  minReadySeconds: 30
+  replicas: 5
+  selector:
+    matchLabels:
+      app: maven
+  template:
+    metadata:
+      labels:
+        app: maven
+    spec:
+      tolerations:
+      - operator: Exists
+        effect: NoSchedule
+      containers:
+      - name: mavendeployment
+        image: maven
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "256Mi"
+          limits:
+            cpu: "200m"
+            memory: "384Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: maven
+  name: mavendsservice
+spec:
+  type: LoadBalancer
+  selector:
+    app: maven
+  ports:
+  - port: 80
+    targetPort: 8080
