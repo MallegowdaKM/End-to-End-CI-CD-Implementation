@@ -1,0 +1,82 @@
+pipeline{
+agent{
+label 'kubernetes_slave'
+}
+options {
+buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '1', numToKeepStr: '5')
+timestamps()
+}
+stages{
+stage("checkout"){
+steps{
+slack("STARTED")
+cleanWs()
+git branch: 'main', credentialsId: 'cbc6f3fd-5b34-4d4f-9006-d9297195ee64', url: 'https://github.com/MallegowdaKM/End-to-End-CI-CD-Implementation.git'
+}
+}
+stage("login for AWSECR"){
+steps{
+sh "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 381492155622.dkr.ecr.ap-south-1.amazonaws.com"
+}
+}
+stage("Build Docker Image"){
+steps{
+sh "docker build -f 5.0.Multistage_Dockerfile_k8s -t 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER} ."
+}
+}
+stage("push the image for AWS ECR"){
+steps{
+sh "docker push 381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER}"
+}
+}
+stage("deploying application kubernetes"){
+steps{
+sh "kubectl apply -f 5.2.Kubernetes_script(maven)"
+}
+}
+stage("set the image"){
+steps{
+sh "kubectl set image deployment/mavendeployment mavendeployment=381492155622.dkr.ecr.ap-south-1.amazonaws.com/maven:${BUILD_NUMBER} -n maven"
+}
+}
+}//stages
+post {
+  aborted {
+    // One or more steps need to be included within each condition's block.
+    slack(currentBuild.result)
+  }
+  success {
+    // One or more steps need to be included within each condition's block.
+    slack(currentBuild.result)
+  }
+  failure {
+    // One or more steps need to be included within each condition's block.
+    slack(currentBuild.result)
+  }
+}
+}//pipeline
+  def slack(String buildStatus = 'STARTED') {
+  // build status of null means successful
+  buildStatus =  buildStatus ?: 'SUCCESS'
+
+  // Default values
+  def colorName = 'RED'
+  def colorCode = '#FF0000'
+  def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+  def summary = "${subject} (${env.BUILD_URL})"
+
+  // Override default values based on build status
+  if (buildStatus == 'STARTED') {
+    colorName= 'YELLOW'
+    colorCode = '#FFFF00'
+  } else if (buildStatus == 'SUCCESS') {
+    colorName = 'GREEN'
+    colorCode = '#00FF00'
+  } else {
+    colorName = 'RED'
+    colorCode = '#FF0000'
+  }
+
+  // Send notifications
+  slackSend (color: colorCode, message: summary)
+}
